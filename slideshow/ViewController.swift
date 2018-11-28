@@ -13,8 +13,8 @@ class ViewController: UIViewController {
     var img1 = UIImage(named: "IMG_1298")!
     var img2 = UIImage(named: "IMG_1302")!
     var img3 = UIImage(named: "IMG_1305")!
-    var count = 1
     var timer: Timer!
+    var count = 0
     
     @IBOutlet weak var nextbutton: UIButton!
     
@@ -59,7 +59,16 @@ class ViewController: UIViewController {
         }
     }
     
- 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // segueから遷移先のzoomViewControllerを取得する
+        let zoomViewController:zoomViewController = segue.destination as! zoomViewController
+        // 遷移先のzoomViewControllerで宣言しているx, countに代入して渡す
+        zoomViewController.count = count
+    }
+
+    @IBAction func send(_ sender: Any) {
+    }
+    
     @IBOutlet weak var button: UIButton!
     
     @IBAction func startstop(_ sender: Any) {
@@ -84,7 +93,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        imageboard.image = img1
+        if count == 1{
+            imageboard.image = img2
+        }
+            
+        else if count == 2{
+            imageboard.image = img3
+        }
+        else{
+            imageboard.image = img1
+            
+        }
        
 
     }
