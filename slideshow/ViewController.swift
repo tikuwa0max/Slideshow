@@ -10,10 +10,101 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var img1 = UIImage(named: "IMG_1298")!
+    var img2 = UIImage(named: "IMG_1302")!
+    var img3 = UIImage(named: "IMG_1305")!
+    var count = 1
+    var timer: Timer!
+    
+    @IBOutlet weak var nextbutton: UIButton!
+    
+
+    
+    @IBOutlet weak var backbutton: UIButton!
+    
+    @IBOutlet weak var imageboard: UIImageView!
+    
+    
+    @IBAction func next(_ sender: UIButton) {
+        
+        if self.timer == nil{
+        if count == 1{
+            imageboard.image = img2
+        }
+        else if count == 2{
+            imageboard.image = img3
+        }
+        else if count == 3{
+            imageboard.image = img1
+            count = 0
+        }
+        count += 1
+    }
+    }
+    
+    @IBAction func back(_ sender: UIButton) {
+        
+        if self.timer == nil{
+        if count == 3{
+            imageboard.image = img2
+        }
+        else if count == 2{
+            imageboard.image = img1
+        }
+        else if count == 1{
+            imageboard.image = img3
+            count = 4
+        }
+        count -= 1
+        }
+    }
+    
+ 
+    @IBOutlet weak var button: UIButton!
+    
+    @IBAction func startstop(_ sender: Any) {
+        if self.timer == nil {
+          self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(autochange(_:)), userInfo: nil, repeats: true)
+            button.setTitle("一時停止", for: .normal)
+            nextbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            backbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            
+            }
+        
+        else {
+        self.timer.invalidate()
+        self.timer = nil
+            button.setTitle("再生", for: .normal)
+            nextbutton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+            backbutton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        }
+        }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        imageboard.image = img1
+       
+
     }
+    
+    @objc func autochange(_ timer: Timer) {
+            if count == 1{
+                imageboard.image = img2
+            }
+            else if count == 2{
+                imageboard.image = img3
+            }
+            else if count == 3{
+                imageboard.image = img1
+                count = 0
+            }
+            count += 1
+        }
+        
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
